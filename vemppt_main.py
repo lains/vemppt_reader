@@ -22,20 +22,21 @@ import vemppt_parser        #Text parse script
 import vemppt_register      #Data register script
 import vemppt_message       #Message output
 
+import sys                      #System primitives
 import logging                  #Log errors
 import serial                   #Read VEDirect data via serial USB
 import ctypes                   #To use MessageBoxW
 import time                     #Reading periods
 from datetime import datetime   #Register local dates
 
-def main():
+def main(serial_port_name):
     #Value reset
     line = 0                            #Initial line in vemppt_register
     initial_date = datetime.now()       #Date register for xls file
 
     #Main thread
+    ser = serial.Serial(serial_port_name, 19200, timeout=10)      #Change here COM port
     try:
-        ser = serial.Serial('COM5', 19200, timeout=10)      #Change here COM port
         vemppt_message.print_message("MPPT Found","Correct port communication\nData registration will begin",64)
 
         line = vemppt_register.xls_open(line)
@@ -53,4 +54,7 @@ def main():
         vemppt_register.xls_close(initial_date)
 
 if __name__ == '__main__':
-    main()
+    serial_port = 'COM5'
+    if len(sys.argv) > 1:
+        serial_port = sys.argv[1]
+    main(serial_port)

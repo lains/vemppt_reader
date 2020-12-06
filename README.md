@@ -29,7 +29,7 @@ $ python -m pip install xlwt
 You can test if you have installed all that vemppt_reader needs running vemppt_offtest.py (it will also generate a xls file)
 
 To use vemppt_reader, run vemppt_main.py
-> Before starting, make sure to put **the correct communication port** on it (in vemppt_main.py).
+> Before starting, make sure either to change **the default serial communication port in vemppt_main.py** or to provide the correct serial port name as the first command line argument.
 
 **To cancel any execution just use the terminate process order** `CTRL + C`
 
