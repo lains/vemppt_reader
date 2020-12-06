@@ -20,15 +20,13 @@
 
 import vemppt_parser        #Text parse script
 import vemppt_register      #Data register script
+import vemppt_message       #Message output
 
 import logging                  #Log errors
 import serial                   #Read VEDirect data via serial USB
 import ctypes                   #To use MessageBoxW
 import time                     #Reading periods
 from datetime import datetime   #Register local dates
-
-def Mbox(title, text, style):
-    return ctypes.windll.user32.MessageBoxW(0, text, title, style)
 
 def main():
     #Value reset
@@ -57,7 +55,7 @@ def main():
 
     #Main thread
     try:
-        Mbox("MPPT Tester","Correct port communication\nData registration will begin",64)
+        vemppt_message.print_message("MPPT Tester","Correct port communication\nData registration will begin",64)
 
         line = vemppt_register.xls_open(line)
 
@@ -83,7 +81,7 @@ def main():
         
     except Exception as e:
         logging.exception("An error ocurred")
-        Mbox("An error ocurred","Something went wrong!",16)
+        vemppt_message.print_message("An error ocurred","Something went wrong!",16)
     finally:
         vemppt_register.xls_close(initial_date)
 
